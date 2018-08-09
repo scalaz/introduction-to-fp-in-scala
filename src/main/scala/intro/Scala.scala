@@ -10,7 +10,7 @@ object Scala {
  /* sbt & repl */
 
 
- /* clases & objects */
+ /* classes & objects */
 
 
  /* methods, values  */
