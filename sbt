@@ -6,11 +6,11 @@
 
 set -o pipefail
 
-declare -r sbt_release_version="0.13.16"
-declare -r sbt_unreleased_version="0.13.16"
+declare -r sbt_release_version="0.13.17"
+declare -r sbt_unreleased_version="0.13.17"
 
-declare -r latest_213="2.13.0-M4"
-declare -r latest_212="2.12.6"
+declare -r latest_213="2.13.0-M5"
+declare -r latest_212="2.12.7"
 declare -r latest_211="2.11.12"
 declare -r latest_210="2.10.7"
 declare -r latest_29="2.9.3"
@@ -23,7 +23,7 @@ declare -r sbt_launch_ivy_snapshot_repo="https://repo.scala-sbt.org/scalasbt/ivy
 declare -r sbt_launch_mvn_release_repo="https://repo.scala-sbt.org/scalasbt/maven-releases"
 declare -r sbt_launch_mvn_snapshot_repo="https://repo.scala-sbt.org/scalasbt/maven-snapshots"
 
-declare -r default_jvm_opts_common="-Xms512m -Xmx1536m -Xss2m"
+declare -r default_jvm_opts_common="-Xms512m -Xss2m"
 declare -r noshare_opts="-Dsbt.global.base=project/.sbtboot -Dsbt.boot.directory=project/.boot -Dsbt.ivy.home=project/.ivy"
 
 declare sbt_jar sbt_dir sbt_create sbt_version sbt_script sbt_new
@@ -96,21 +96,6 @@ declare jvm_opts_file="$(init_default_option_file JVM_OPTS .jvmopts)"
 build_props_sbt () {
   [[ -r "$buildProps" ]] && \
     grep '^sbt\.version' "$buildProps" | tr '=\r' ' ' | awk '{ print $2; }'
-}
-
-update_build_props_sbt () {
-  local ver="$1"
-  local old="$(build_props_sbt)"
-
-  [[ -r "$buildProps" ]] && [[ "$ver" != "$old" ]] && {
-    perl -pi -e "s/^sbt\.version\b.*\$/sbt.version=${ver}/" "$buildProps"
-    grep -q '^sbt.version[ =]' "$buildProps" || printf "\nsbt.version=%s\n" "$ver" >> "$buildProps"
-
-    vlog "!!!"
-    vlog "!!! Updated file $buildProps setting sbt.version to: $ver"
-    vlog "!!! Previous value was: $old"
-    vlog "!!!"
-  }
 }
 
 set_sbt_version () {
@@ -474,8 +459,7 @@ setTraceLevel() {
 # set scalacOptions if we were given any -S opts
 [[ ${#scalac_args[@]} -eq 0 ]] || addSbt "set scalacOptions in ThisBuild += \"${scalac_args[@]}\""
 
-# Update build.properties on disk to set explicit version - sbt gives us no choice
-[[ -n "$sbt_explicit_version" && -z "$sbt_new" ]] && update_build_props_sbt "$sbt_explicit_version"
+[[ -n "$sbt_explicit_version" && -z "$sbt_new" ]] && addJava "-Dsbt.version=$sbt_explicit_version"
 vlog "Detected sbt version $sbt_version"
 
 if [[ -n "$sbt_script" ]]; then
