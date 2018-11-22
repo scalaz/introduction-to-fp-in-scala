@@ -114,7 +114,7 @@ object Applicative {
     ???
 
   /**
-   * Sequences a list of structures to a structure of list.
+   * Apply, discarding the value of the second argument.
    *
    * scala> Applicative.apLeft(Option(1), Option(2))
    * resX: List[Int] = Some(1)
@@ -125,7 +125,7 @@ object Applicative {
    * scala> Applicative.apLeft(List(1, 2), List(3, 4, 5))
    * resX: List[List] = List(1, 1, 1, 2, 2, 2)
    */
-  def apLeft[F[_]: Applicative, A, B](a: F[A], b: F[B]): F[B] =
+  def apLeft[F[_]: Applicative, A, B](a: F[A], b: F[B]): F[A] =
     ???
 
   /**
