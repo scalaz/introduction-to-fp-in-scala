@@ -35,6 +35,9 @@ object Equal {
   implicit def StringEqual =
     derived[String]
 
+  implicit def CharEqual =
+    derived[Char]
+
   implicit def IntEqual =
     derived[Int]
 
