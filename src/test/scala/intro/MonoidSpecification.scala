@@ -5,29 +5,45 @@ import test._
 
 object MonoidSpecification extends Properties("Monoid") {
 
-  property("monoid: sum") =
-    monoidLaws(Monoid.SumMonoid, arbitrary[Int].map(Sum))
+  include(
+    monoidLaws(Monoid.SumMonoid, arbitrary[Int].map(Sum)),
+    "monoid: sum"
+  )
 
-  property("monoid: product") =
-    monoidLaws(Monoid.ProductMonoid, arbitrary[Int].map(Product))
+  include(
+    monoidLaws(Monoid.ProductMonoid, arbitrary[Int].map(Product)),
+    "monoid: product"
+  )
 
-  property("monoid: min") =
-    monoidLaws(Monoid.MinMonoid, arbitrary[Int].map(Min))
+  include(
+    monoidLaws(Monoid.MinMonoid, arbitrary[Int].map(Min)),
+    "monoid: min"
+  )
 
-  property("monoid: max") =
-    monoidLaws(Monoid.MaxMonoid, arbitrary[Int].map(Max))
+  include(
+    monoidLaws(Monoid.MaxMonoid, arbitrary[Int].map(Max)),
+    "monoid: max"
+  )
 
-  property("monoid: first") =
-    monoidLaws(Monoid.FirstMonoid[Int], arbitrary[Option[Int]].map(First(_)))
+  include(
+    monoidLaws(Monoid.FirstMonoid[Int], arbitrary[Option[Int]].map(First(_))),
+    "monoid: first"
+  )
 
-  property("monoid: last") =
-    monoidLaws(Monoid.LastMonoid[Int], arbitrary[Option[Int]].map(Last(_)))
+  include(
+    monoidLaws(Monoid.LastMonoid[Int], arbitrary[Option[Int]].map(Last(_))),
+    "monoid: last"
+  )
 
-  property("monoid: list") =
-    monoidLaws(Monoid.ListMonoid[Int], arbitrary[List[Int]])
+  include(
+    monoidLaws(Monoid.ListMonoid[Int], arbitrary[List[Int]]),
+    "monoid: list"
+  )
 
-  property("monoid: map") =
-    monoidLaws(Monoid.MapMonoid[Int, List[Int]], arbitrary[Map[Int, List[Int]]])
+  include(
+    monoidLaws(Monoid.MapMonoid[Int, List[Int]], arbitrary[Map[Int, List[Int]]]),
+    "monoid: map"
+  )
 
   property("monoid: foldMap sum") =
     Monoid.foldMap(List(1, 2, 3, 4, 5))(x => Sum(x)) ?= Sum(15)
@@ -38,7 +54,7 @@ object MonoidSpecification extends Properties("Monoid") {
   property("monoid: sum") =
     Monoid.sum(List(1, 2, 3, 4, 5).map(Sum)) ?= Sum(15)
 
-  def monoidLaws[A](m: Monoid[A], gen: Gen[A]): Prop =
+  def monoidLaws[A](m: Monoid[A], gen: Gen[A]): Properties =
     new Properties("MonoidLaws") {
 
       property("left identity") =

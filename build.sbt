@@ -1,13 +1,13 @@
 name := "introduction-to-fp-in-scala"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.12.7"
 
 libraryDependencies ++= Seq(
-  "org.scalaz"        %% "scalaz-core"                  % "7.1.1"
-, "org.scalaz"        %% "scalaz-scalacheck-binding"    % "7.1.1"    % "test"
-, "org.scalaz.stream" %% "scalaz-stream"                % "0.6a"
-, "org.specs2"        %% "specs2"                       % "2.4.5"    % "test"
-, "org.scalacheck"    %% "scalacheck"                   % "1.12.2"   % "test"
+  "org.scalaz"        %% "scalaz-core"                  % "7.2.27"
+, "org.scalaz"        %% "scalaz-scalacheck-binding"    % "7.2.27-scalacheck-1.14" % "test"
+, "org.scalaz.stream" %% "scalaz-stream"                % "0.8.6a"
+, "org.specs2"        %% "specs2"                       % "3.8.9"    % "test" exclude("org.specs2", "specs2-cats_2.12")
+, "org.scalacheck"    %% "scalacheck"                   % "1.14.0"   % "test"
 )
 
 resolvers ++= Seq(
@@ -20,9 +20,9 @@ scalacOptions := Seq(
   "-deprecation"
 , "-unchecked"
 , "-Xfatal-warnings"
-, "-Xlint"
+, "-Xlint:_,-unused"
 , "-feature"
 , "-language:_"
 )
 
-addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.7")
+addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.8")
