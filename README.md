@@ -1,4 +1,4 @@
-# Introduction to FP in Scala [![Build Status](https://travis-ci.org/ambiata/introduction-to-fp-in-scala.svg)](https://travis-ci.org/ambiata/introduction-to-fp-in-scala)
+# Introduction to FP in Scala [![Build Status](https://travis-ci.org/scalaz/introduction-to-fp-in-scala.svg)](https://travis-ci.org/scalaz/introduction-to-fp-in-scala)
 This is the base project for the workshop.
 
 __note__: please test your environment before you arrive so we can get started quickly on the day.
@@ -9,8 +9,8 @@ __note__: please test your environment before you arrive so we can get started q
 Before you attend you will need to get a few things
 ready and ensure everything is setup properly. `sbt`
 is going to do all the heavy lifting though, so
-hopefully it is all straight forward, if not, send
-us an email via <mark@hibberd.id.au>.
+hopefully it is all straight forward, if not, [file an
+issue](https://github.com/scalaz/introduction-to-fp-in-scala/issues/new).
 
 
 Pre-requisites.
@@ -22,7 +22,7 @@ Pre-requisites.
 
 Getting scala and validating your environment:
 
-    git clone https://github.com/markhibberd/introduction-to-fp-in-scala.git
+    git clone https://github.com/scalaz/introduction-to-fp-in-scala.git
     cd introduction-to-fp-in-scala
     ./sbt "test:compile"
     # For windows users just use your installed `sbt` directly without the `./`
