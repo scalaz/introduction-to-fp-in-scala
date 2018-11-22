@@ -149,10 +149,6 @@ NOTE: `Applicative` can often prove more tricky than `Monad`, feel free to flip 
 
  - [src/main/scala/challenge/Zippers.scala](src/main/scala/challenge/Zippers.scala)
 
-### Lenses
-
- - [src/main/scala/challenge/Lens.scala](src/main/scala/challenge/Lens.scala) (TBD)
-
 ### Patterns in Types
 
  - [src/main/scala/patterns/Reader.scala](src/main/scala/patterns/Reader.scala)
