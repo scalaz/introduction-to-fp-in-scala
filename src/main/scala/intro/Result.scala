@@ -178,13 +178,18 @@ object ResultExample {
   case object Multiply extends Operation
 
   /*
-   * Parse an int if it is valid, otherwise fail with NotAnInt.
+   * Parse an int if it is valid, otherwise fail with NotANumber.
    *
    * Hint: Scala defines String#toInt, but warning it throws exceptions
    *       if it is not a valid Int :| i.e. use try catch.
    */
   def int(body: String): Result[Int] =
-    ???
+    try {
+      ???
+    } catch {
+      case e: NumberFormatException =>
+        ???
+    }
 
   /*
    * Parse the operation if it is valid, otherwise fail with InvalidOperation.
