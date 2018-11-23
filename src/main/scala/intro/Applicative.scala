@@ -37,11 +37,11 @@ object Applicative {
    * scala> Applicative[Option].ap(Some(1))(Some((i: Int) => i + 1))
    * resX: Option[Int] = Some(2)
    */
-  implicit def OptionApplicative: Applicative[Option] =
-    new Applicative[Option] {
-      def point[A](a: => A): Option[A] =
+  implicit def OptionalApplicative: Applicative[Optional] =
+    new Applicative[Optional] {
+      def point[A](a: => A): Optional[A] =
         ???
-      def ap[A, B](a: Option[A])(f: Option[A => B]): Option[B] =
+      def ap[A, B](a: Optional[A])(f: Optional[A => B]): Optional[B] =
         ???
     }
 

@@ -8,7 +8,7 @@ object ApplicativeSpecification extends Properties("Applicative") {
     Applicative[Id].ap(Id(1))(Id((i: Int) => i + 1)) ?= Id(2)
 
   property("applicative: option") =
-    Applicative[Option].ap(Some(1))(Some((i: Int) => i + 1)) ?= Some(2)
+    Applicative[Optional].ap(Optional.ok(1))(Optional.ok((i: Int) => i + 1)) ?= Optional.ok(2)
 
   property("applicative: list 1") =
     Applicative[List].ap(List(1, 2, 3))(List((i: Int) => i + 1)) ?= List(2, 3, 4)
@@ -17,68 +17,68 @@ object ApplicativeSpecification extends Properties("Applicative") {
     Applicative[List].ap(List(1, 2, 3))(List((i: Int) => i + 1, (i: Int) => i - 1)) ?= List(2, 3, 4, 0, 1, 2)
 
   property("applicative: liftA2 some some") =
-    Applicative.liftA2(Option(1), Option(2))((i, j) => i + j) ?= Some(3)
+    Applicative.liftA2(Optional.ok(1), Optional.ok(2))((i, j) => i + j) ?= Optional.ok(3)
 
   property("applicative: liftA2 some none") =
-    Applicative.liftA2(Option(1), None)((i, j) => i + j) ?= None
+    Applicative.liftA2(Optional.ok(1), Optional.empty)((i, j) => i + j) ?= Optional.empty
 
   property("applicative: liftA3 some some") =
-    Applicative.liftA3(Option(1), Option(2), Option(3))((i, j, k) => i + j + k) ?= Some(6)
+    Applicative.liftA3(Optional.ok(1), Optional.ok(2), Optional.ok(3))((i, j, k) => i + j + k) ?= Optional.ok(6)
 
   property("applicative: liftA3 some none") =
-    Applicative.liftA3(Option(1), None, Option(3))((i, j, k) => i + j + k) ?= None
+    Applicative.liftA3(Optional.ok(1), Optional.empty, Optional.ok(3))((i, j, k) => i + j + k) ?= Optional.empty
 
   property("applicative: liftA1 some") =
-    Applicative.liftA1(Option(1))(_ + 1) ?= Some(2)
+    Applicative.liftA1(Optional.ok(1))(_ + 1) ?= Optional.ok(2)
 
   property("applicative: liftA1 none") =
-    Applicative.liftA1(Option.empty[Int])(_ + 1) ?= None
+    Applicative.liftA1(Optional.empty[Int])(_ + 1) ?= Optional.empty
 
   property("applicative: apRight some") =
-    Applicative.apRight(Option(1), Option(2)) ?= Some(2)
+    Applicative.apRight(Optional.ok(1), Optional.ok(2)) ?= Optional.ok(2)
 
   property("applicative: apRight none") =
-    Applicative.apRight(Option(1), None) ?= None
+    Applicative.apRight(Optional.ok(1), Optional.empty[Int]) ?= Optional.empty
 
   property("applicative: apRight list") =
     Applicative.apRight(List(1, 2), List(3, 4, 5)) ?= List(3, 4, 5, 3, 4, 5)
 
   property("applicative: apLeft some") =
-    Applicative.apLeft(Option(1), Option(2)) ?= Some(1)
+    Applicative.apLeft(Optional.ok(1), Optional.ok(2)) ?= Optional.ok(1)
 
   property("applicative: apLeft none") =
-    Applicative.apLeft(Option(1), None) ?= None
+    Applicative.apLeft(Optional.ok(1), Optional.empty[Int]) ?= Optional.empty
 
   property("applicative: apLeft list") =
     Applicative.apLeft(List(1, 2), List(3, 4, 5)) ?= List(1, 1, 1, 2, 2, 2)
 
   property("applicative: sequence some") =
-    Applicative.sequence(List(Option(1), Option(2), Option(3))) ?= Some(List(1, 2, 3))
+    Applicative.sequence(List(Optional.ok(1), Optional.ok(2), Optional.ok(3))) ?= Optional.ok(List(1, 2, 3))
 
   property("applicative: sequence none") =
-    Applicative.sequence(List(Option(1), None, Option(3))) ?= None
+    Applicative.sequence(List(Optional.ok(1), Optional.empty[Int], Optional.ok(3))) ?= Optional.empty
 
   property("applicative: sequence empty") =
-    Applicative.sequence(List[Option[Int]]()) ?= Some(Nil)
+    Applicative.sequence(List[Optional[Int]]()) ?= Optional.ok(Nil)
 
   property("applicative: sequence some") =
     Applicative.sequence(List(List(1, 2, 3), List(1, 2))) ?= List(List(1, 1), List(1, 2), List(2, 1), List(2, 2), List(3, 1), List(3, 2))
 
   property("applicative: sequence some") =
-    Applicative.traverse(List(1, 2, 3), (i: Int) => Option(i + 1)) ?= Some(List(2, 3, 4))
+    Applicative.traverse(List(1, 2, 3), (i: Int) => Optional.ok(i + 1)) ?= Optional.ok(List(2, 3, 4))
 
   property("applicative: replicateA some") =
-    Applicative.replicateA(3, Option(1)) ?= Some(List(1, 1, 1))
+    Applicative.replicateA(3, Optional.ok(1)) ?= Optional.ok(List(1, 1, 1))
 
   property("applicative: replicateA none") =
-    Applicative.replicateA(3, Option.empty[Int]) ?= None
+    Applicative.replicateA(3, Optional.empty[Int]) ?= Optional.empty
 
   property("applicative: replicateA list") =
     Applicative.replicateA(2, List(1, 2)) ?= List(List(1, 1), List(1, 2), List(2, 1), List(2, 2))
 
   property("applicative: filterM some") =
-    Applicative.filterM(List(1, 2, 3), (a: Int) => if (a < 9) Some(a % 2 != 0) else None) ?= Some(List(1, 3))
+    Applicative.filterM(List(1, 2, 3), (a: Int) => if (a < 9) Optional.ok(a % 2 != 0) else Optional.empty[Boolean]) ?= Optional.ok(List(1, 3))
 
   property("applicative: filterM none") =
-    Applicative.filterM(List(1, 2, 3), (a: Int) => if (a < 3) Some(a % 2 != 0) else None) ?= None
+    Applicative.filterM(List(1, 2, 3), (a: Int) => if (a < 3) Optional.ok(a % 2 != 0) else Optional.empty[Boolean]) ?= Optional.empty
 }
