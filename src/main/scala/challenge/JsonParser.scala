@@ -11,7 +11,65 @@ case class JsonArray(value: List[Json]) extends Json
 case class JsonBoolean(value: Boolean) extends Json
 case object JsonNull extends Json
 
+sealed trait SpecialCharacter {
+
+  def toChar: Char =
+    this match {
+      case BackSpace =>
+        '\b'
+      case FormFeed =>
+        '\f'
+      case NewLine =>
+        '\n'
+      case CarriageReturn =>
+        '\r'
+      case Tab =>
+        '\t'
+      case VerticalTab =>
+        '\u000b'
+      case SingleQuote =>
+        '\''
+      case DoubleQuote =>
+        '"'
+      case Backslash =>
+        '\\'
+    }
+}
+case object BackSpace extends SpecialCharacter
+case object FormFeed extends SpecialCharacter
+case object NewLine extends SpecialCharacter
+case object CarriageReturn extends SpecialCharacter
+case object Tab extends SpecialCharacter
+case object VerticalTab extends SpecialCharacter
+case object SingleQuote extends SpecialCharacter
+case object DoubleQuote extends SpecialCharacter
+case object Backslash extends SpecialCharacter
+
 object JsonParser {
+
+  def toSpecialChar(c: Char): Optional[SpecialCharacter] =
+    c match {
+      case 'b' =>
+        Full(BackSpace)
+      case 'f' =>
+        Full(FormFeed)
+      case 'n' =>
+        Full(NewLine)
+      case 'r' =>
+        Full(CarriageReturn)
+      case 't' =>
+        Full(Tab)
+      case 'v' =>
+        Full(VerticalTab)
+      case '\'' =>
+        Full(SingleQuote)
+      case '"'  =>
+        Full(DoubleQuote)
+      case '\\' =>
+        Full(Backslash)
+      case _ =>
+        Empty()
+    }
 
   /**
    * Parse a JSON string. Handle double-quotes, special characters, hexadecimal characters.
