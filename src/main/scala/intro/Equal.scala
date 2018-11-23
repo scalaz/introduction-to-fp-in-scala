@@ -32,13 +32,13 @@ object Equal {
 
   /* Equal Instances */
 
-  implicit def StringEqual =
+  implicit def StringEqual: Equal[String] =
     derived[String]
 
-  implicit def CharEqual =
+  implicit def CharEqual: Equal[Char] =
     derived[Char]
 
-  implicit def IntEqual =
+  implicit def IntEqual: Equal[Int] =
     derived[Int]
 
   implicit def OptionEqual[A: Equal]: Equal[Option[A]] =
