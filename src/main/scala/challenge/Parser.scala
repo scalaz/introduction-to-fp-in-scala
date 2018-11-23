@@ -117,6 +117,20 @@ object Parser {
     ???
 
   /**
+   * Applies a function on a Parser.
+   *
+   * scala> Applicative[Parser].ap(Parser.value(1))(Parser.value((i: Int) => i + 1)).run("x")
+   * resX: Result[ParseState[Int]] = Ok(ParseState(x,2))
+   */
+  implicit val ParserApplicative: Applicative[Parser] =
+    new Applicative[Parser] {
+      def point[A](a: => A): Parser[A] =
+        ???
+      def ap[A, B](a: Parser[A])(f: Parser[A => B]): Parser[B] =
+        ???
+    }
+
+  /**
    * Return a parser that succeeds with a character off the input
    * or fails with NotEnoughInput if the input is empty.
    *
