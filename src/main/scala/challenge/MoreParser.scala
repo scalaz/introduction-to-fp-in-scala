@@ -1,5 +1,7 @@
 package challenge
 
+import intro.Applicative
+
 object MoreParser {
 
   /**
