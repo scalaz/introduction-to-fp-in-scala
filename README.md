@@ -53,10 +53,10 @@ which is handy when working on a particular exercise:
     ./sbt
 
     # Run the tests from a package containing the name "Id"
-    > testOnly "*Id*"
+    > testOnly *Id*
 
     # Add a ~ for starting a watch daemon to recompile and re-run tests when files are changed
-    > ~testOnly "*Result*"
+    > ~testOnly *Result*
 
 
 ## Working with scala.
