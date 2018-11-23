@@ -147,7 +147,7 @@ NOTE: `Applicative` can often prove more tricky than `Monad`, feel free to flip 
 
 ### Zippers
 
- - [src/main/scala/challenge/Zippers.scala](src/main/scala/challenge/Zippers.scala)
+ - [src/main/scala/challenge/Zipper.scala](src/main/scala/challenge/Zipper.scala)
 
 ### Patterns in Types
 
